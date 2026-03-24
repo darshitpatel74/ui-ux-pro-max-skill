@@ -1,4 +1,4 @@
-import { rm } from 'node:fs/promises';
+import { rm, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
 import chalk from 'chalk';
@@ -24,10 +24,11 @@ async function removeSkillDir(baseDir: string, aiType: Exclude<AIType, 'all'>): 
   for (const folder of folders) {
     const skillDir = join(baseDir, folder, 'skills', 'ui-ux-pro-max');
     try {
+      await stat(skillDir);
       await rm(skillDir, { recursive: true, force: true });
       removed.push(`${folder}/skills/ui-ux-pro-max`);
     } catch (err: unknown) {
-      // Re-throw permission errors; force:true already handles ENOENT
+      // Skip non-existent dirs; re-throw permission or other errors
       if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
     }
   }
