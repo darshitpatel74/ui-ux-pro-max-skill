@@ -135,6 +135,8 @@ Per-AI install folders are mapped in `cli/src/types/index.ts:AI_FOLDERS` (e.g. `
 - **Python 3.x** — no external dependencies (stdlib only: `csv`, `re`, `math`, `pathlib`, `argparse`)
 - **Bun** — for CLI development and building (Node ≥18 also works for the bundled `dist/`)
 
+There is no automated test suite in this repo. Validate changes by running `search.py` directly against the CSVs (and `--design-system` for end-to-end recommendation flow) and by smoke-testing the CLI via `bun run dev -- init --ai claude` in a scratch directory.
+
 ## Git Workflow
 
 Never push directly to `main`. Always:
